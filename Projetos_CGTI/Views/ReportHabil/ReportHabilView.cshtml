@@ -1,0 +1,205 @@
+﻿@model Projetos_CGTI.Models.ConsultarReportHabil
+
+<script type="text/javascript">
+    var j = jQuery.noConflict();
+    j(function () {
+        j('#ID_Empresa_Get').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            buttonWidth: 'auto'
+        });
+
+        j('#ID_ContaBancaria_Get').multiselect({
+            includeSelectAllOption: true,
+            allSelectedText: 'All Selected',
+            enableFiltering: true,
+            buttonWidth: 'auto',
+            maxHeight: 300
+        });
+        j('#ID_Fornecedor_Get').multiselect({
+            includeSelectAllOption: true,
+            allSelectedText: 'All Selected',
+            enableFiltering: true,
+            buttonWidth: 'auto',
+            maxHeight: 300
+        });
+        j('#ID_Centro_Custo_Get').multiselect({
+            includeSelectAllOption: true,
+            allSelectedText: 'All Selected',
+            enableFiltering: true,
+            buttonWidth: 'auto',
+            maxHeight: 300
+        });
+
+        j('#ID_Conta_Caixa_Get').multiselect({
+            includeSelectAllOption: true,
+            allSelectedText: 'All Selected',
+            enableFiltering: true,
+            buttonWidth: 'auto',
+            maxHeight: 300
+        });
+        j('#ID_Cliente_Get').multiselect({
+            includeSelectAllOption: true,
+            allSelectedText: 'All Selected',
+            enableFiltering: true,
+            buttonWidth: 'auto',
+            maxHeight: 300
+        });
+        j("#ID_ContaBancaria_Get").multiselect('selectAll', false);
+        j("#ID_ContaBancaria_Get").multiselect('updateButtonText');
+
+        j("#ID_Fornecedor_Get").multiselect('selectAll', false);
+        j("#ID_Fornecedor_Get").multiselect('updateButtonText');
+
+        j("#ID_Centro_Custo_Get").multiselect('selectAll', false);
+        j("#ID_Centro_Custo_Get").multiselect('updateButtonText');
+
+        j("#ID_Conta_Caixa_Get").multiselect('selectAll', false);
+        j("#ID_Conta_Caixa_Get").multiselect('updateButtonText');
+
+        j("#ID_Cliente_Get").multiselect('selectAll', false);
+        j("#ID_Cliente_Get").multiselect('updateButtonText');
+    });
+</script>
+
+<script type="text/javascript">
+    function returnContaBancaria() {
+        document.getElementById("ContaBancaria").submit();
+    }
+</script>
+
+@*<style>
+    span.multiselect-native-select > div.btn-group {
+    width: 200px !important;
+    }
+    </style>*@
+
+@using (Html.BeginForm("ReportHabilView", "ReportHabil", FormMethod.Post, new { @id = "ContaBancaria" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-primary" style="margin-top: 10px">
+        <div class="panel-heading">Dados da Atualização</div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <label for="lblData">Ultima Atualização </label>
+                        @Html.TextBoxFor(model => model.DataUltimoUpdate, new { @class = "form-inline form-control", @style = "text-align:center;font-size: larger", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-md-3" style="margin-top: 10px">
+                        @Html.ActionLink("Load Habil", "LoadHabil", "ReportHabil", new { @class = "Botao_CGTI", @style = "margin-top: 10px" })
+                    </div>
+
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.ID_Relatorio)
+                        @Html.DropDownListFor(model => model.ID_Relatorio, new SelectList(this.Model.listRelatorio, "ID", "Nome"), new { @class = "form-control", @onchange = "returnContaBancaria();" })
+                    </div>
+
+                    @if (Model.ID_Relatorio > 1)
+                    {
+                        <div class="col-md-2">
+                            @Html.Label("Selecione a Empresa")
+                            @Html.ListBoxFor(m => m.ID_Empresa_Get, new MultiSelectList(Model.listEmpresa, "ID", "Nome"), new { @multiple = "multiple" })
+                        </div>
+
+                        <div class="col-md-3" , style="margin-top: 15px">
+                            @*<button class="Botao_CGTI" onclick="returnContaBancaria()">Carregar</button>*@
+                            <button type="submit" class="Botao_CGTI" value="Carregar" name="button">Carregar</button>
+                        </div>
+                    }
+                    @if (Model.ID_Relatorio == 1)
+                    {
+                        <div class="col-md-2">
+                            @Html.Label("Selecione a Empresa", new { @id = "lblhabilitar" })
+                            @Html.DropDownListFor(m => m.ID_Empresa, new SelectList(this.Model.listEmpresa, "ID", "Nome"), new { @class = "form-control", @id = "txthabilitar" })
+                        </div>
+
+                        <div class="col-md-3" , style="margin-top: 15px">
+                            @*<button class="Botao_CGTI" value="Carregar" onclick="returnContaBancaria()">Carregar</button>*@
+                            <button type="submit" class="Botao_CGTI" value="Carregar" name="button">Carregar</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    if ((Model.ID_Empresa != null) && (Model.ID_Relatorio != 0))
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">Filtro de Relatorio</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Datainicio)
+                            @Html.TextBoxFor(model => model.Datainicio, new { @class = "form-control", type = "date", style = "text-align:center" })
+                        </div>
+
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Datafim)
+                            @Html.TextBoxFor(model => model.Datafim, new { @class = "form-control", type = "date", style = "text-align:center" })
+                        </div>
+                        @if (Model.ID_Relatorio != 1)
+                        {
+                            <div class="col-md-2">
+                                @Html.Label("Conta Bancaria")
+                                @Html.ListBoxFor(model => model.ID_ContaBancaria_Get, new SelectList(this.Model.listContaBancaria, "ID", "Nome"), new { @multiple = "multiple" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-2">
+                                @Html.Label("Conta Bancaria")
+                                @Html.DropDownListFor(m => m.ID_ContaBancaria, new SelectList(this.Model.listContaBancaria, "ID", "Nome"), "Selecione o Banco", new { @class = "form-control" })
+                            </div>
+                        }
+                        @if ((Model.ID_Relatorio != 1) && (Model.ID_Relatorio != 5))
+                        {
+                            <div class="col-md-3">
+                                @Html.Label("Fornecedores")
+                                @Html.DropDownListFor(model => model.ID_Fornecedor_Get, new SelectList(this.Model.listFornecedor, "ID", "Nome"), new { @multiple = "multiple", @class = "form-control"})
+                            </div>
+                        }
+                        @if (Model.ID_Relatorio != 1)
+                        {
+                            <div class="col-md-3">
+                                @Html.Label("Centro de Custo")
+                                @Html.DropDownListFor(model => model.ID_Centro_Custo_Get, new SelectList(this.Model.listCentroCusto, "ID", "Nome"), new { @multiple = "multiple", @class = "form-control" })
+                            </div>
+                        }
+
+                        <div class="col-md-3">
+                            @Html.Label("Conta Caixa")
+                            @Html.DropDownListFor(model => model.ID_Conta_Caixa_Get, new SelectList(this.Model.listContaCaixa, "ID", "Nome"), new { @multiple = "multiple" })
+                        </div>
+                        
+                        @if ((Model.ID_Relatorio != 1) && (Model.ID_Relatorio != 3) && (Model.ID_Relatorio != 4))
+                        {
+                            <div class="col-md-3">
+                                @Html.Label("Cliente")
+                                @Html.DropDownListFor(model => model.ID_Cliente_Get, new SelectList(this.Model.listCliente, "ID", "Nome"), new { @multiple = "multiple" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <button type="submit" class="Botao_CGTI" value="Pesquisa" name="button" formtarget="_blank">Abrir na Tela</button>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="Botao_CGTI" value="Exportar" name="button" formtarget="_blank">Salvar em Excel</button>
+            </div>
+        </div>
+    }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

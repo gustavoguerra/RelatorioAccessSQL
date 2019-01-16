@@ -1,0 +1,67 @@
+﻿@model Projetos_CGTI.Models.LoginViewModel
+@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>                
+                @Html.ActionLink("Bem vindo " + User.Identity.GetUserName(), "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-right">        
+      <li><button class="Botao_Login" data-toggle="modal" data-target=".modalLogin">Log in</button></li>
+    </ul>
+
+    <div class="modal fade modalLogin" data-backdrop="" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-cadastro" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title titulo-modal" id="myModalLabel">Login do Sistema</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "sr-only" })
+                                <label for="lblUsuario">Email</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "sr-only" })
+                                <label for="lblData">Senha</label>
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Senha", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p></p>
+                                        <button type="submit" class="Botao_Login">Entrar</button>
+                                        @Html.ActionLink("Esqueceu a Senha? ", "ForgotPassword", "Account", new { area = "" }, new { @class = "text-warning" })
+                                        @Html.ActionLink("Novo Usuario !", "Register", "Account", new { area = "" }, new { @class = "text-primary" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+

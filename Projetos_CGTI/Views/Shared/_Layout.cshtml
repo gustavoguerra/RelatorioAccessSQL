@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")*@
+
+    @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
+    @*<script src="~/Scripts/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>  
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>   
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js" type="text/javascript"></script>
+
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/Content/ProprioCSS.css" rel="stylesheet" />    
+
+</head>
+
+<body>
+    <div class="navbar navbar-default navbar-fixed-top cornav">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("CGTI", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <!-- Administrativo -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrativo <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Controle Cheque", "ChequeView", "Cheque")</li>
+                                <li>@Html.ActionLink("Planilha de Reembolso", "ReembolsoView", "Reembolso")</li>
+                                <li>@Html.ActionLink("Relatorios Habil", "ReportHabilView", "ReportHabil")</li>
+                            </ul>
+                        </li>
+
+                        <!-- Contabilidade -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contabilidade <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Programa1", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Programa2", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Programa3", "Contact", "Home")</li>
+                            </ul>
+                        </li>
+
+                        <!-- Engenharia -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Engenharia <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Programa1", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Programa2", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Programa3", "Contact", "Home")</li>
+                            </ul>
+                        </li>
+
+                        <!-- Esporte -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Esporte <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Cadastro de Beneficiados", "AlunoView", "Aluno")</li>
+                                <li>@Html.ActionLink("Programa2", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Programa3", "Contact", "Home")</li>
+                            </ul>
+                        </li>
+
+                        <!-- Opções Usuario -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Trocar Senha", "ResetPassword", "Account")</li>
+                                <li>@Html.ActionLink("Programa2", "Reembolso", "Reembolso")</li>
+                                <li>@Html.ActionLink("Programa3", "Contact", "Home")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+                @Html.Partial("_LoginPartial", new Projetos_CGTI.Models.LoginViewModel()) 
+            </div>
+        </div>
+    </div>
+
+    <div class="body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Centro de Gestão de Tecnologia e Inovação - CGTI Ver 2.0</p>
+        </footer>
+    </div>
+
+
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    
+    @*<script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

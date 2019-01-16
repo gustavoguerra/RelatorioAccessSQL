@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Projetos_CGTI.Models.AlunoViewModel>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "pagingType": "full_numbers"
+        });
+    });
+</script>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AlunoListView</title>
+</head>
+<body>
+
+    <div>@ViewBag.Menssagem</div>
+    
+    <p></p>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.ActionLink("Novo Aluno", "AlunoCreateView", null, new { @class = "btn Botao_CGTI" })
+        </div>
+    </div>
+    <p></p>
+    <div class="table-responsive">
+        <table id="example" class="display" style="width:100%">
+            <thead class="" style="background-color:#d57c1b">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome_Projeto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome_Aluno)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Celular)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome_Projeto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome_Aluno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Celular)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "AlunoEditView", new { item.ID }) |
+                            @Html.ActionLink("Delete", "DeleteAluno", new { item.ID })
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+    </div>
+</body>
+</html>

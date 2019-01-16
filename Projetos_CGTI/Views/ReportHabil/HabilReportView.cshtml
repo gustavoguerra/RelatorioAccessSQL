@@ -1,0 +1,35 @@
+﻿@model string
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "pagingType": "full_numbers"
+        });
+    });
+</script>
+
+<p></p>
+<div class="table-responsive">
+    <div class="form-group" style="font-size:25px; text-align:center;">
+        @Html.Raw("Valor Total "+(String)ViewBag.Report_Total)
+    </div>
+
+    <div class="row col-md-12">
+        @*<table class="table">
+                <thead class="" style="background-color:#d57c1b">
+                    @Html.Raw((String)ViewBag.ReportCabecalho)
+                </thead>
+                <tbody>
+                    @Html.Raw((String)ViewBag.ReportCorpo)
+                </tbody>
+            </table>*@
+        <table id="example" class="display" style="width:100%">
+            <thead class="" style="background-color:#d57c1b">
+                @Html.Raw((String)ViewBag.ReportCabecalho)
+            </thead>
+            <tbody>
+                @Html.Raw((String)ViewBag.ReportCorpo)
+            </tbody>
+        </table>
+    </div>
+</div>

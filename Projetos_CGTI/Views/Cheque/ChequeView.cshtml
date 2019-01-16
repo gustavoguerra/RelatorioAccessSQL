@@ -1,0 +1,166 @@
+﻿@model Projetos_CGTI.Models.ChequeModel
+
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imagem').attr('src', e.target.result),
+                $('#imagem').attr('style', "display: normal;");
+            }
+            //reader.readAsDataURL(input.files[0]);
+            readre.readURL(input.files[0]);
+        }
+        else {
+            $('#imagem').attr('style', "display: none;")
+        }
+    }
+</script>
+
+@using (Html.BeginForm("ChequeView", "Cheque", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="col-sm-10">
+            <h2>Controle Cheque</h2>
+        </div>
+
+        <p></p>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Dados do Usuario</div>
+
+        <div class="panel-body">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="lblUsuario">Usuario Logado: </label>
+                        <input type="text" class="form-inline form-control" id="exampleInputName2" placeholder="Jane Doe" readonly="readonly">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="lblData">Data de Acesso: </label>
+                        <input type="text" class="form-inline form-control" style="font-size: larger; text-align:center" id="datesys" value=@DateTime.Now readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <label></label>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Salvar Registro</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+        <!-- Campos-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">Informações do Cheque</div>
+        <div class="panel-body">
+
+            <!-- Primeira Linha-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Datalanca)
+                            @Html.TextBoxFor(m => m.Datalanca, new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.Datalanca, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NTalao)
+                            @Html.TextBoxFor(model => model.NTalao, new { @class = "form-control", style = "font-size: larger; text-aling:center" })
+                            @Html.ValidationMessageFor(model => model.NTalao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NCheque)
+                            @Html.TextBoxFor(m => m.NCheque, new { @class = "form-control", style = "font-size: larger; text-aling:center" })
+                            @Html.ValidationMessageFor(model => model.NCheque, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Referencia)
+                            @Html.TextBoxFor(m => m.Referencia, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Referencia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Banco)
+
+                            @Html.DropDownListFor(m => m.Banco, new List<SelectListItem>
+                                        {
+                                            new SelectListItem() {Text = "Itau", Value="itau"},
+                                            new SelectListItem() {Text = "Banco do Brasil", Value="BB"},
+                                            new SelectListItem() {Text = "Safra", Value="safra"}
+                                        }, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                            @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Segunda Linha-->
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.Favorecido)
+                    @Html.EditorFor(model => model.Favorecido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Favorecido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.URL)
+                        @Html.TextBoxFor(m => m.URL, new { @class = "btn btn-primary", type = "file", onchange = "readURL(this);" })
+                        @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input type="submit" id="imagem" src="#" alt="Imagem do Arquivo..." style="display: none;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @Html.Action("ChequePartial", "Cheque")
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
